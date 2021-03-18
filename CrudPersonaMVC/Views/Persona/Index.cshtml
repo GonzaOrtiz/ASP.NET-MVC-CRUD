@@ -1,0 +1,95 @@
+﻿@model IEnumerable<CrudPersonaMVC.Models.ViewModels.ListarPersonas>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Datos Personas</h2>
+
+<p>
+    <div class=" row" style="text-align:right; padding:5px">
+    </div>
+    <div class="col-md-12" style="text-align:right">
+        <input type="button" class="btn btn-primary" value="Nuevo" onclick="document.location.href='@Url.Content("~/Persona/Nuevo")'" />
+    </div>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+
+        </th>
+        <th>
+            <P>EDITAR/ELIMINAR</P>
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>
+                @Html.DisplayFor(model => item.Id)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+            <td>
+
+                <!-- Botones Editar Eliminar  -->
+                <input type="button" onclick="document.location.href='@Url.Content("~/Persona/Editar/"+item.Id)'" value="Editar" class="btn btn-default" />
+                <input class="btn btn-danger" onclick="jsEliminar(@item.Id);" type="button" value="Eliminar" />
+            </td>
+
+        </tr>
+    }
+
+</table>
+<script>
+    function jsEliminar(id)
+    {
+            if (confirm("Quieres Eliminar El Registro?"))
+            {
+                url = "@Url.Content("~/Persona/Eliminar")" + "/"+id; //metodo Eliminar Controller
+
+                $.post(url, function (data) {
+
+                if (data=="ok") {
+                document.location.href = "@Url.Content("~/Persona/")"
+                console.log("Exito");
+            }
+
+            else
+            {
+                alert("No se pudo Eliminar El registro");
+            }
+
+            })
+            }
+    }
+</script>
